@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Main section background and padding */
+    .terms-conditions-section {
+        padding: 80px 20px;
+        background: #f4f7fb;
+    }
+    
+    /* Container setup */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Main title */
+    .terms-conditions-title {
+        font-size: 42px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    /* Introduction paragraph */
+    .terms-conditions-introduction {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 50px;
+        line-height: 1.8;
+        text-align: center;
+    }
+    
+    /* Each section item */
+    .terms-conditions-item {
+        margin-bottom: 40px;
+    }
+    
+    /* Heading for each item */
+    .terms-conditions-heading {
+        font-size: 28px;
+        color: #34495e;
+        margin-bottom: 20px;
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .terms-conditions-heading::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-size: 30px;
+        line-height: 1;
+    }
+    
+    /* Text under each heading */
+    .terms-conditions-text {
+        font-size: 18px;
+        color: #666;
+        line-height: 1.8;
+        text-align: justify;
+    }
+    
+    /* Email link */
+    .terms-conditions-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .terms-conditions-link:hover {
+        color: #2c80b4;
+        text-decoration: underline;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .terms-conditions-title {
+            font-size: 32px;
+        }
+    
+        .terms-conditions-heading {
+            font-size: 24px;
+        }
+    
+        .terms-conditions-text,
+        .terms-conditions-introduction {
+            font-size: 16px;
+        }
+    
+        .container {
+            padding: 20px;
+        }
+    }
+    </style>
+    
+<section class="terms-conditions-section">
+    <div class="container">
+        <h1 class="terms-conditions-title">Terms and Conditions</h1>
+
+        <div class="terms-conditions-introduction">
+            <p>Welcome to OurStore. These Terms and Conditions govern your use of our website and services. By accessing or using our platform, you agree to comply with and be bound by the terms outlined below. Please read them carefully before proceeding. If you do not agree to these terms, you should not use our website.</p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">1. Use of Our Website</h2>
+            <p class="terms-conditions-text">
+                OurStore grants you a limited, non-exclusive, non-transferable license to access and use our website for personal shopping purposes only. You may not reproduce, distribute, modify, transmit, reuse, repost, or use our content for commercial purposes without prior written permission. Unauthorized use may result in termination of your access and may lead to legal action.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">2. Account Responsibility</h2>
+            <p class="terms-conditions-text">
+                When you create an account with us, you are responsible for maintaining the confidentiality of your account credentials, including your password. You agree to accept responsibility for all activities that occur under your account. If you suspect unauthorized access or breach of security, please contact us immediately so we can secure your account.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">3. Product Information and Availability</h2>
+            <p class="terms-conditions-text">
+                We strive to ensure that all product descriptions, prices, and availability are accurate and up-to-date. However, errors may occur, and we reserve the right to correct any errors, inaccuracies, or omissions at any time without prior notice. We also reserve the right to limit the quantity of any product or service and to discontinue any product at any time.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">4. Pricing and Payment</h2>
+            <p class="terms-conditions-text">
+                All prices are listed in local currency and are subject to change without notice. Payment must be made in full at the time of purchase. We accept major credit cards, debit cards, and other forms of electronic payment as listed on our website. In the event of a pricing error, we reserve the right to cancel any orders placed at the incorrect price.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">5. Shipping and Delivery</h2>
+            <p class="terms-conditions-text">
+                Shipping times provided are estimates only and are subject to change based on availability, carrier performance, and destination factors. We are not responsible for delays once the shipment has left our facilities. Risk of loss and title for items purchased pass to you upon delivery to the carrier.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">6. Returns and Refunds</h2>
+            <p class="terms-conditions-text">
+                Our return policy is outlined in our Return Policy section. Please review it carefully before making a purchase. Items must be returned in their original condition and packaging to qualify for a refund or exchange. Refunds are processed once returned items are received and inspected. Return shipping costs may apply unless the return is due to our error.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">7. Intellectual Property Rights</h2>
+            <p class="terms-conditions-text">
+                All content on OurStore, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and software, is the property of OurStore or its content suppliers and is protected by intellectual property laws. Unauthorized use or duplication without express permission is strictly prohibited.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">8. Limitation of Liability</h2>
+            <p class="terms-conditions-text">
+                OurStore shall not be held liable for any indirect, incidental, special, or consequential damages arising out of or related to your use of the website or products purchased. We do not guarantee that our services will be uninterrupted, secure, or error-free. Your use of the site is at your sole risk.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">9. Governing Law</h2>
+            <p class="terms-conditions-text">
+                These Terms and Conditions shall be governed by and construed in accordance with the laws of the jurisdiction in which OurStore operates. Any disputes arising under or related to these terms shall be subject to the exclusive jurisdiction of the courts located within that jurisdiction.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">10. Changes to the Terms</h2>
+            <p class="terms-conditions-text">
+                We reserve the right to revise these Terms and Conditions at any time without prior notice. The updated version will be posted on this page, and your continued use of the website after any changes constitutes your acceptance of the new Terms. We encourage you to review them regularly.
+            </p>
+        </div>
+
+        <div class="terms-conditions-item">
+            <h2 class="terms-conditions-heading">11. Contact Us</h2>
+            <p class="terms-conditions-text">
+                If you have any questions about these Terms and Conditions, please reach out to our support team. You can contact us by email at <a href="mailto:support@ourstore.com" class="terms-conditions-link">support@ourstore.com</a> or by mailing us at OurStore Support, 1234 Commerce Lane, ShopCity, Country.
+            </p>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

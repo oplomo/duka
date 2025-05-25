@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+   
+   
+
+    h2 {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        position: relative;
+    }
+
+    h2::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        margin: 10px auto;
+        border-radius: 2px;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 2rem;
+        border-radius: 8px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    img:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    p {
+        font-size: 1.1rem;
+        color: orange;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    } 
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+    }
+
+    textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    button[type="submit"] {
+        background: linear-gradient(135deg, #3498db, #9b59b6);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    button[type="submit"]:hover {
+        background: linear-gradient(135deg, #2980b9, #8e44ad);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .rating-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .rating-container input {
+        display: none;
+    }
+
+    .rating-container label {
+        font-size: 2rem;
+        color: #ddd;
+        cursor: pointer;
+        margin: 0 5px;
+        transition: color 0.2s;
+    }
+
+    .rating-container input:checked ~ label,
+    .rating-container input:hover ~ label {
+        color: #f1c40f;
+    }
+
+    .rating-container label:hover ~ label {
+        color: #f1c40f !important;
+    }
+
+    @media (max-width: 768px) {
+        form {
+            padding: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>Write a Review for {{ product.name }}</h2>
+
+    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" width="300px">
+
+    <p>{{ product.description }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            Please correct the errors below.
+        </div>
+        {% endif %}
+        
+        <div class="form-group">
+            {{ form.rating.label_tag }}
+            <div class="rating-container">
+                {% for radio in form.rating %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">★</label>
+                {% endfor %}
+            </div>
+            {% if form.rating.errors %}
+            <div class="text-danger">
+                {{ form.rating.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+            {% if form.comment.errors %}
+            <div class="text-danger">
+                {{ form.comment.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+{% endblock %}

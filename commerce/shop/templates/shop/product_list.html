@@ -1,0 +1,516 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Main Container Styling */
+    .product-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Header Styling */
+    .product-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .product-header h1 {
+        font-size: 2.8rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .product-header p {
+        font-size: 1.1rem;
+        color: #7f8c8d;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Filter Section */
+    .filter-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-filter {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .category-btn {
+        padding: 0.5rem 1.2rem;
+        border-radius: 20px;
+        background-color: #ecf0f1;
+        color: #2c3e50;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .category-btn:hover, .category-btn.active {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .sort-options select {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: white;
+    }
+
+    /* Product Grid */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    /* Product Card */
+    .product-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image-container {
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #e74c3c;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .product-details {
+        padding: 1.5rem;
+    }
+
+    .product-category {
+        display: inline-block;
+        color: #3498db;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        margin-bottom: 0.8rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .product-description {
+        color: #7f8c8d;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .product-stock {
+        font-size: 0.9rem;
+        color: #27ae60;
+        font-weight: 600;
+    }
+
+
+
+    /* Search Form Styles */
+.search-form {
+    display: flex;
+    margin-right: 20px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.search-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px 0 0 25px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #4CAF50;
+}
+
+.search-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #45a049;
+}
+
+.search-btn svg {
+    fill: currentColor;
+}
+
+/* Filter section layout */
+.filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sort-options select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-form {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .category-filter {
+        justify-content: center;
+    }
+}
+    .add-to-cart {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+        background-color: #2980b9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        }
+        
+        .filter-section {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .product-header h1 {
+            font-size: 2rem;
+        }
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 0;
+        grid-column: 1 / -1;
+    }
+
+    .empty-state img {
+        max-width: 300px;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state p {
+        color: #7f8c8d;
+        max-width: 500px;
+        margin: 0 auto 2rem;
+    }
+    /* "You can review" badge */
+.badge-review {
+    display: inline-block;
+    background-color: #28a745; /* Green */
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+/* Product rating stars */
+.product-rating {
+    font-size: 18px;
+    color: #ffc107; /* Gold color for stars */
+    margin: 5px 0;
+}
+
+/* If you want half-star or dynamic later, we'll update */
+.product-rating span {
+    color: #ffc107; /* Gold stars */
+    font-size: 18px;
+}
+
+
+
+
+</style>
+
+
+<div class="product-container">
+    <div class="product-header">
+        <h1>Discover Our Products</h1>
+        <p>Explore our carefully curated collection of high-quality products designed to meet your needs.</p>
+    </div>
+
+    <div class="filter-section">
+        <!-- Search Form -->
+        <form method="GET" action="{% url 'product_list' %}" class="search-form">
+            <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+            <button type="submit" class="search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </form>
+
+        <!-- Category Filter Form -->
+        <form method="GET" action="{% url 'product_list' %}" id="category-form">
+            <div class="category-filter">
+                <button type="submit" name="category" value="" class="category-btn {% if not request.GET.category %}active{% endif %}">All Products</button>
+                {% for category in categories %}
+                <button type="submit" name="category" value="{{ category.id }}" class="category-btn {% if request.GET.category == category.id|stringformat:'s' %}active{% endif %}">
+                    {{ category.name }}
+                </button>
+                {% endfor %}
+            </div>
+        </form>
+
+        <!-- Sort Options Form -->
+        <form method="GET" action="{% url 'product_list' %}" id="sort-form">
+            <div class="sort-options">
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="featured" {% if request.GET.sort == 'featured' or not request.GET.sort %}selected{% endif %}>Sort by: Featured</option>
+                    <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest Arrivals</option>
+                    <option value="bestselling" {% if request.GET.sort == 'bestselling' %}selected{% endif %}>Best Selling</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    {% if products %}
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.images.first %}
+        <div class="product-image-container">
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.images.first.alt_text|default:product.name }}" class="product-image">
+        </div>
+        {% else %}
+        <div class="product-image-container">
+            <img src="https://via.placeholder.com/400x300?text=No+Image" alt="No image available" class="product-image">
+        </div>
+        {% endif %}
+
+        {% if product.stock < 5 %}
+        <span class="product-badge">Low Stock</span>
+        {% endif %}
+
+        <div class="product-details">
+            {% if product.category %}
+            <span class="product-category">{{ product.category.name }}</span>
+            {% endif %}
+            <h3 class="product-title">
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            </h3>
+
+            <div class="product-rating">
+                <span class="stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                            <span style="color: gold;">★</span>
+                        {% else %}
+                            <span style="color: lightgray;">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            
+
+            {% if product.id in products_with_review_rights %}
+            <span class="badge-review">You can review</span>
+            {% endif %}
+
+            <p class="product-description">{{ product.description }}</p>
+
+            <div class="product-footer">
+                <div>
+                    <div class="product-price">${{ product.price }}</div>
+                    <div class="product-stock">{{ product.stock }} in stock</div>
+                </div>
+                <button class="add-to-cart" onclick="window.location.href='{% url 'add_to_cart' product.id %}'">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <img src="https://cdn.dribbble.com/users/204955/screenshots/4930541/media/75b7d2f6f7baba8a6f76696a75bfb5c9.png" alt="No products found">
+    <h3>No Products Available</h3>
+    <p>We couldn't find any products matching your criteria. Please check back later or try a different category.</p>
+    <button class="category-btn active">Refresh Products</button>
+</div>
+{% endif %}
+
+
+<script>
+    // This will preserve all existing GET parameters when submitting category form
+    document.getElementById('category-form').addEventListener('submit', function(e) {
+        const form = e.target;
+        const url = new URL(form.action);
+        const params = new URLSearchParams(window.location.search);
+        
+        // Remove category if it exists
+        params.delete('category');
+        
+        // Add new category if not "All Products"
+        const categoryBtn = document.querySelector('.category-btn.active');
+        if (categoryBtn && categoryBtn.value) {
+            params.set('category', categoryBtn.value);
+        }
+        
+        // Update the form action with all parameters
+        form.action = url.pathname + '?' + params.toString();
+    });
+
+    // Similar for sort form if needed
+    document.getElementById('sort-form').addEventListener('submit', function(e) {
+        const form = e.target;
+        const url = new URL(form.action);
+        const params = new URLSearchParams(window.location.search);
+        
+        // Remove sort if it exists
+        params.delete('sort');
+        
+        // Add new sort value
+        const sortSelect = form.querySelector('select[name="sort"]');
+        if (sortSelect.value) {
+            params.set('sort', sortSelect.value);
+        }
+        
+        // Update the form action with all parameters
+        form.action = url.pathname + '?' + params.toString();
+    });
+</script>
+<script>
+    // Simple category filter functionality
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            // In a real implementation, you would filter products here
+        });
+    });
+</script>
+{% endblock %}

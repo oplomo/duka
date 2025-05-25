@@ -1,0 +1,357 @@
+{% extends "admin/a_base.html" %}
+
+{% block admin_content %}
+<style>
+    /* Admin Order Details Styles */
+    :root {
+        --admin-primary: #4e73df;
+        --admin-secondary: #2e59d9;
+        --admin-accent: #f6c23e;
+        --admin-success: #1cc88a;
+        --admin-info: #36b9cc;
+        --admin-warning: #f6c23e;
+        --admin-danger: #e74a3b;
+        --admin-light: #f8f9fc;
+        --admin-dark: #5a5c69;
+        --admin-gray: #d1d3e2;
+        --admin-shadow-sm: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.08);
+        --admin-shadow-md: 0 0.3rem 0.75rem rgba(0, 0, 0, 0.1);
+        --admin-shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+        --admin-border-radius-sm: 0.2rem;
+        --admin-border-radius-md: 0.35rem;
+        --admin-border-radius-lg: 0.5rem;
+        --admin-transition: all 0.3s ease-in-out;
+    }
+
+    .order-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .order-details > div {
+        background: white;
+        border-radius: var(--admin-border-radius-lg);
+        padding: 1.5rem;
+        box-shadow: var(--admin-shadow-sm);
+        transition: var(--admin-transition);
+        border-left: 4px solid var(--admin-primary);
+    }
+
+    .order-details > div:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--admin-shadow-md);
+        border-left-color: var(--admin-accent);
+    }
+
+    h1 {
+        color: var(--admin-dark);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--admin-primary), var(--admin-accent));
+        border-radius: 3px;
+    }
+
+    h3 {
+        color: var(--admin-primary);
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--admin-gray);
+    }
+
+    p {
+        margin-bottom: 0.8rem;
+        color: var(--admin-dark);
+        display: flex;
+    }
+
+    p::before {
+        content: '•';
+        color: var(--admin-primary);
+        margin-right: 0.5rem;
+        font-weight: bold;
+    }
+
+    form {
+        margin-top: 1.5rem;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        color: var(--admin-dark);
+        transition: var(--admin-transition);
+    }
+
+    label:hover {
+        color: var(--admin-primary);
+    }
+
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 0.8rem;
+        accent-color: var(--admin-success);
+        cursor: pointer;
+    }
+
+    button[type="submit"] {
+        background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: var(--admin-border-radius-md);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--admin-transition);
+        box-shadow: var(--admin-shadow-sm);
+    }
+
+    button[type="submit"]:hover {
+        background: linear-gradient(135deg, var(--admin-secondary), var(--admin-primary));
+        box-shadow: var(--admin-shadow-md);
+        transform: translateY(-2px);
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 1rem;
+        color: var(--admin-primary);
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: var(--admin-border-radius-md);
+        transition: var(--admin-transition);
+        background-color: rgba(78, 115, 223, 0.1);
+    }
+
+    a:hover {
+        color: white;
+        background-color: var(--admin-primary);
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: var(--admin-shadow-sm);
+    }
+
+    /* Status Badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .status-pending {
+        background-color: rgba(246, 194, 62, 0.2);
+        color: #b68a0e;
+    }
+
+    .status-delivered {
+        background-color: rgba(28, 200, 138, 0.2);
+        color: #0e8c5a;
+    }
+
+    /* Rating Stars */
+    .rating-stars {
+        display: inline-flex;
+        margin-left: 0.5rem;
+    }
+
+    .rating-stars span {
+        color: var(--admin-warning);
+        margin-right: 2px;
+    }
+
+    /* Total Price Highlight */
+    .total-price {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--admin-success);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .order-details {
+            grid-template-columns: 1fr;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .order-details > div {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .order-details > div:nth-child(1) { animation-delay: 0.1s; }
+    .order-details > div:nth-child(2) { animation-delay: 0.2s; }
+    .order-details > div:nth-child(3) { animation-delay: 0.3s; }
+    .order-details > div:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Custom Checkbox Style */
+    input[type="checkbox"] {
+        position: relative;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--admin-gray);
+        border-radius: var(--admin-border-radius-sm);
+        margin-right: 0.8rem;
+        transition: var(--admin-transition);
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: var(--admin-success);
+        border-color: var(--admin-success);
+    }
+
+    input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: bold;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Tooltip for Review Link */
+    a[href*="review"] {
+        position: relative;
+    }
+
+    a[href*="review"]::after {
+        content: 'Click to view full review details';
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--admin-dark);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--admin-border-radius-sm);
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--admin-transition);
+    }
+
+    a[href*="review"]:hover::after {
+        opacity: 1;
+        visibility: visible;
+        bottom: calc(100% + 5px);
+    }
+
+    /* Print Styles */
+    @media print {
+        .order-details {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        button, a {
+            display: none;
+        }
+        
+        body {
+            background: white;
+            color: black;
+            font-size: 12pt;
+        }
+        
+        h1 {
+            color: black;
+            font-size: 16pt;
+        }
+    }
+</style>
+
+<h1>Order Details #{{ order.id }}</h1>
+
+<div class="order-details">
+    <div>
+        <h3>Buyer Information</h3>
+        <p>Username: {{ order.buyer.username }}</p>
+        <p>Email: {{ order.buyer.email }}</p>
+    </div>
+    
+    <div>
+        
+        <h3>Product Information</h3>
+        <p><a href="{{ order.product.get_absolute_url }}">{{ order.product.name }}</a> </p>
+        <p>Price: ${{ order.product.price }}</p>
+        <p>Quantity: {{ order.quantity }}</p>
+        <p>Total: <span class="total-price">${% widthratio order.quantity 1 order.product.price %}</span></p>
+    </div>
+    
+    <div>
+        <h3>Order Status 
+            <span class="status-badge {% if order.is_delivered %}status-delivered{% else %}status-pending{% endif %}">
+                {% if order.is_delivered %}Delivered{% else %}Pending{% endif %}
+            </span>
+        </h3>
+        <form method="post" action="{% url 'admin_update_order_status' order.id %}">
+            {% csrf_token %}
+            <label>
+                <input type="checkbox" name="is_delivered" {% if order.is_delivered %}checked{% endif %}>
+                Mark as delivered
+            </label>
+            <button type="submit">Update Status</button>
+        </form>
+    </div>
+    
+    {% if order.reviewed %}
+    <div>
+        <h3>Review</h3>
+        <p>Rating: {{ order.review.rating }} 
+            <span class="rating-stars">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= order.review.rating %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                {% endfor %}
+            </span>
+        </p>
+        <p>Comment: {{ order.review.comment }}</p>
+        <a href="{% url 'admin_review_detail' order.review.id %}">View Review Details</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Main section background and padding */
+    .shipping-policy-section {
+        padding: 80px 20px;
+        background: linear-gradient(to bottom, #f1f2f6, #ffffff);
+    }
+    
+    /* Container setup */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Main title */
+    .shipping-policy-title {
+        font-size: 42px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    /* Introduction paragraph */
+    .shipping-policy-introduction {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 50px;
+        line-height: 1.8;
+        text-align: center;
+    }
+    
+    /* Each policy item */
+    .shipping-policy-item {
+        margin-bottom: 50px;
+    }
+    
+    /* Item heading */
+    .shipping-policy-heading {
+        font-size: 28px;
+        color: #34495e;
+        margin-bottom: 20px;
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .shipping-policy-heading::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-size: 30px;
+        line-height: 1;
+    }
+    
+    /* Text under each heading */
+    .shipping-policy-text {
+        font-size: 18px;
+        color: #666;
+        line-height: 1.8;
+        text-align: justify;
+    }
+    
+    /* Shipping methods list */
+    .shipping-methods-list {
+        font-size: 18px;
+        color: #666;
+        padding-left: 40px;
+        line-height: 1.8;
+    }
+    
+    .shipping-methods-list li {
+        margin-bottom: 10px;
+    }
+    
+    /* Email link */
+    .shipping-policy-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .shipping-policy-link:hover {
+        color: #2c80b4;
+        text-decoration: underline;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .shipping-policy-title {
+            font-size: 32px;
+        }
+    
+        .shipping-policy-heading {
+            font-size: 24px;
+        }
+    
+        .shipping-policy-text,
+        .shipping-policy-introduction,
+        .shipping-methods-list {
+            font-size: 16px;
+        }
+    
+        .container {
+            padding: 20px;
+        }
+    }
+    </style>
+    
+<section class="shipping-policy-section">
+    <div class="container">
+        <h1 class="shipping-policy-title">Shipping Policy</h1>
+
+        <div class="shipping-policy-introduction">
+            <p>Thank you for shopping with us! We are committed to delivering your order accurately, in good condition, and always on time.</p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Order Processing</h2>
+            <p class="shipping-policy-text">
+                Orders are processed within 1-2 business days after payment verification. Orders placed on weekends or holidays will be processed the next business day.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Shipping Methods and Delivery Times</h2>
+            <ul class="shipping-methods-list">
+                <li>Standard Shipping: 5-7 business days</li>
+                <li>Express Shipping: 2-3 business days</li>
+                <li>Overnight Shipping: 1 business day</li>
+                <li>International Shipping: 7-21 business days</li>
+            </ul>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Shipping Costs</h2>
+            <p class="shipping-policy-text">
+                Shipping costs are calculated at checkout based on your location and the selected shipping method. We occasionally offer free shipping promotions.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Tracking Your Order</h2>
+            <p class="shipping-policy-text">
+                Once your order is shipped, you will receive a confirmation email with a tracking number. You can track your shipment on our website or through the courier’s tracking system.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Delivery Issues</h2>
+            <p class="shipping-policy-text">
+                If you experience any issues such as a delayed or missing delivery, please contact our customer support team within 7 days of the expected delivery date.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">International Orders</h2>
+            <p class="shipping-policy-text">
+                International shipments may be subject to customs duties, taxes, and import fees. These charges are the responsibility of the recipient and are not included in the product price or shipping cost.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Restrictions</h2>
+            <p class="shipping-policy-text">
+                Some items may be restricted for shipment to certain locations due to size, weight, or regulatory reasons. We will notify you if your order cannot be fulfilled.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Change of Shipping Address</h2>
+            <p class="shipping-policy-text">
+                You may request a change to the shipping address before your order has been dispatched. Please contact customer service immediately if you need to update your address.
+            </p>
+        </div>
+
+        <div class="shipping-policy-item">
+            <h2 class="shipping-policy-heading">Contact Us</h2>
+            <p class="shipping-policy-text">
+                For any questions or concerns regarding shipping, please contact our support team at <a href="mailto:support@ourstore.com" class="shipping-policy-link">support@ourstore.com</a>.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

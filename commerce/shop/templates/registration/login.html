@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* CSS Variables for Theme Consistency */
+    :root {
+        --primary-color: #3498db;
+        --primary-hover: #2980b9;
+        --secondary-color: #2ecc71;
+        --danger-color: #e74c3c;
+        --light-color: #ecf0f1;
+        --dark-color: #2c3e50;
+        --text-color: #333;
+        --text-light: #7f8c8d;
+        --border-radius: 6px;
+        --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease-in-out;
+        --font-stack: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        --input-focus: 0 0 0 3px rgba(52, 152, 219, 0.25);
+    }
+
+    /* Base Styles */
+    .form-container {
+        max-width: 580px;
+        margin: 3rem auto;
+        padding: 2.5rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        font-family: var(--font-stack);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    /* Typography */
+    .form-container h2 {
+        color: var(--dark-color);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        font-size: 2.2rem;
+        position: relative;
+        padding-bottom: 0.8rem;
+    }
+
+    .form-container h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+
+    /* Form Elements */
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-container form p {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-container label {
+        font-size: 0.95rem;
+        color: var(--dark-color);
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container input[type="password"],
+    .form-container input[type="username"] {
+        padding: 0.85rem 1.2rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+        background-color: #f9f9f9;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container input[type="email"]:focus,
+    .form-container input[type="password"]:focus,
+    .form-container input[type="username"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: var(--input-focus);
+        background-color: white;
+    }
+
+    /* Error States */
+    .form-container .errorlist {
+        list-style: none;
+        padding: 0;
+        margin: 0.25rem 0 0;
+        color: var(--danger-color);
+        font-size: 0.85rem;
+    }
+
+    .form-container .error input {
+        border-color: var(--danger-color);
+    }
+
+    /* Button Styles */
+    .form-container button[type="submit"] {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 1rem;
+    }
+
+    .form-container button[type="submit"]:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-container button[type="submit"]:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+    /* Link Styles */
+    .form-container p a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        transition: var(--transition);
+    }
+
+    .form-container p a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: var(--primary-color);
+        transition: var(--transition);
+    }
+
+    .form-container p a:hover::after {
+        width: 100%;
+    }
+
+    .form-container p a:hover {
+        color: var(--primary-hover);
+    }
+
+    /* Helper Text */
+    .form-container .helptext {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+    }
+
+    /* Forgot Password Link */
+    .form-container .forgot-password {
+        text-align: right;
+        margin-top: -1rem;
+        font-size: 0.9rem;
+    }
+
+    .form-container .forgot-password a {
+        color: var(--text-light);
+    }
+
+    .form-container .forgot-password a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .form-container {
+            margin: 2rem 1.5rem;
+            padding: 2rem 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            margin: 1.5rem 1rem;
+            padding: 1.5rem 1rem;
+        }
+
+        .form-container h2 {
+            font-size: 1.8rem;
+        }
+
+        .form-container button[type="submit"] {
+            padding: 0.9rem 1.2rem;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Accessibility Focus Styles */
+    .form-container a:focus,
+    .form-container button:focus,
+    .form-container input:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+        .form-container {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .form-container h2 {
+            color: var(--light-color);
+        }
+
+        .form-container label {
+            color: var(--light-color);
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container input[type="username"] {
+            background-color: #34495e;
+            border-color: #2c3e50;
+            color: var(--light-color);
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="email"]:focus,
+        .form-container input[type="password"]:focus,
+        .form-container input[type="username"]:focus {
+            background-color: #2c3e50;
+        }
+    }
+
+    /* Print Styles */
+    @media print {
+        .form-container {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+
+        .form-container button[type="submit"] {
+            display: none;
+        }
+    }
+
+    /* Micro-interactions */
+    .form-container input[type="text"]:hover,
+    .form-container input[type="email"]:hover,
+    .form-container input[type="password"]:hover,
+    .form-container input[type="username"]:hover {
+        border-color: #bbb;
+    }
+
+    /* Loading State (for potential future JS implementation) */
+    .form-container.loading button[type="submit"] {
+        position: relative;
+        color: transparent;
+    }
+
+    .form-container.loading button[type="submit"]::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    /* Complex Selector for Enhanced Specificity */
+    .form-container > form > p:not(:last-child):not(:first-child) {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Placeholder Styling */
+    .form-container ::placeholder {
+        color: #bbb;
+        opacity: 1;
+    }
+
+    /* Firefox Specific Styles */
+    @-moz-document url-prefix() {
+        .form-container button[type="submit"] {
+            padding: 0.95rem 1.5rem;
+        }
+    }
+
+    /* High Contrast Mode */
+    @media screen and (-ms-high-contrast: active) {
+        .form-container {
+            border: 1px solid windowText;
+        }
+
+        .form-container button[type="submit"] {
+            -ms-high-contrast-adjust: none;
+            background-color: windowText;
+            color: window;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <h2>Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+</div>
+{% endblock %}

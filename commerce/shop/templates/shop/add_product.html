@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Main Container */
+    .product-form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Form Header */
+    .form-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .form-header h1 {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .form-header p {
+        color: #7f8c8d;
+        font-size: 1rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+        margin-bottom: 1.8rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 0.95rem;
+    }
+
+    .form-label.required::after {
+        content: ' *';
+        color: #e74c3c;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237f8c8d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 16px 12px;
+        padding-right: 2.5rem;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    /* Image Upload Styling */
+    .image-upload-container {
+        border: 2px dashed #ddd;
+        border-radius: 6px;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .image-upload-container:hover {
+        border-color: #3498db;
+    }
+
+    .image-upload-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .upload-icon {
+        font-size: 2.5rem;
+        color: #3498db;
+        margin-bottom: 1rem;
+    }
+
+    .upload-text {
+        color: #7f8c8d;
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-hint {
+        font-size: 0.85rem;
+        color: #bdc3c7;
+    }
+
+    /* Preview Images */
+    .image-preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .image-preview {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #eee;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.8rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        background-color: #2980b9;
+    }
+
+    /* Error Messages */
+    .error-message {
+        color: #e74c3c;
+        background-color: #fdecea;
+        padding: 0.8rem 1rem;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .product-form-container {
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+        
+        .form-header h1 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<div class="product-form-container">
+    <div class="form-header">
+        <h1>Add a New Product</h1>
+        <p>Fill out the form below to list your product in our marketplace</p>
+    </div>
+
+    {% if error %}
+    <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Product Name -->
+        <div class="form-group">
+            <label for="name" class="form-label required">Product Name</label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-control" 
+                placeholder="Enter product name"
+                value="{{ preserved_data.name|default:'' }}"
+                required
+            >
+        </div>
+        
+        <!-- Category -->
+        <div class="form-group">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" name="category" class="form-control">
+                <option value="">Select a category (optional)</option>
+                {% for category in categories %}
+                <option 
+                    value="{{ category.id }}"
+                    {% if preserved_data.category == category.id|stringformat:"i" %}selected{% endif %}
+                >
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description" class="form-label required">Product Description</label>
+            <textarea 
+                id="description" 
+                name="description" 
+                class="form-control" 
+                placeholder="Describe your product in detail"
+                required
+            >{{ preserved_data.description|default:'' }}</textarea>
+        </div>
+        
+        <!-- Price and Stock -->
+        <div class="form-row" style="display: flex; gap: 1.5rem;">
+            <div class="form-group" style="flex: 1;">
+                <label for="price" class="form-label required">Price</label>
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #7f8c8d;">$</span>
+                    <input 
+                        type="number" 
+                        id="price" 
+                        name="price" 
+                        class="form-control" 
+                        step="0.01" 
+                        min="0" 
+                        placeholder="0.00"
+                        value="{{ preserved_data.price|default:'' }}"
+                        required
+                        style="padding-left: 30px;"
+                    >
+                </div>
+            </div>
+            
+            <div class="form-group" style="flex: 1;">
+                <label for="stock" class="form-label required">Stock</label>
+                <input 
+                    type="number" 
+                    id="stock" 
+                    name="stock" 
+                    class="form-control" 
+                    min="1" 
+                    value="{{ preserved_data.stock|default:'1' }}"
+                    required
+                >
+                <small class="upload-hint">Minimum stock is 1</small>
+            </div>
+        </div>
+        
+        <!-- Image Upload -->
+        <div class="form-group">
+            <label class="form-label">Product Images</label>
+            <div class="image-upload-container">
+                <label for="images" class="image-upload-label">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">Drag & drop images here or click to browse</div>
+                    <div class="upload-hint">Upload at least one high-quality image (Max 5MB each)</div>
+                    <input 
+                        type="file" 
+                        id="images" 
+                        name="images" 
+                        multiple 
+                        accept="image/*"
+                        style="display: none;"
+                    >
+                </label>
+            </div>
+            
+            <!-- Image Preview Area -->
+            <div class="image-preview-container" id="imagePreview">
+                <!-- Preview images will appear here -->
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">
+            <i class="fas fa-plus-circle"></i> Add Product
+        </button>
+    </form>
+</div>
+
+<script>
+    // Image preview functionality
+    document.getElementById('images').addEventListener('change', function(event) {
+        const previewContainer = document.getElementById('imagePreview');
+        previewContainer.innerHTML = ''; // Clear previous previews
+        
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.match('image.*')) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('image-preview');
+                    previewContainer.appendChild(img);
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+</script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+{% endblock %}

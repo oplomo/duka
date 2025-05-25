@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Main section background and padding */
+    .privacy-policy-section {
+        padding: 80px 20px;
+        background: linear-gradient(to bottom, #f4f6f8, #ffffff);
+    }
+    
+   
+    /* Main title */
+    .privacy-policy-title {
+        font-size: 42px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    /* Introduction paragraph */
+    .privacy-policy-introduction {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 50px;
+        line-height: 1.8;
+        text-align: center;
+    }
+    
+    /* Each policy item */
+    .privacy-policy-item {
+        margin-bottom: 50px;
+    }
+    
+    /* Item heading */
+    .privacy-policy-heading {
+        font-size: 28px;
+        color: #34495e;
+        margin-bottom: 20px;
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .privacy-policy-heading::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-size: 30px;
+        line-height: 1;
+    }
+    
+    /* Text under each heading */
+    .privacy-policy-text {
+        font-size: 18px;
+        color: #666;
+        line-height: 1.8;
+        text-align: justify;
+    }
+    
+    /* Email link */
+    .privacy-policy-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .privacy-policy-link:hover {
+        color: #2c80b4;
+        text-decoration: underline;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .privacy-policy-title {
+            font-size: 32px;
+        }
+    
+        .privacy-policy-heading {
+            font-size: 24px;
+        }
+    
+        .privacy-policy-text, .privacy-policy-introduction {
+            font-size: 16px;
+        }
+    
+        .container {
+            padding: 20px;
+        }
+    }
+    </style>
+    
+<section class="privacy-policy-section">
+    <div class="container">
+        <h1 class="privacy-policy-title">Privacy Policy</h1>
+
+        <div class="privacy-policy-introduction">
+            <p>At OurStore, your privacy is of the utmost importance to us. This Privacy Policy describes how we collect, use, disclose, and protect your personal information when you use our website. We are committed to maintaining your trust and handling your information with care and respect.</p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">1. Information We Collect</h2>
+            <p class="privacy-policy-text">
+                We collect a variety of information from you to provide better services and improve your experience. This includes personal information such as your full name, email address, phone number, billing and shipping addresses, and payment details when you make a purchase. Additionally, we collect technical data such as IP addresses, browser type, access times, and referring website addresses through automated technologies like cookies and server logs.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">2. How We Use Your Information</h2>
+            <p class="privacy-policy-text">
+                The information we collect is primarily used to fulfill your orders, manage your account, and provide customer support. We also use it to improve our website, send promotional emails, conduct surveys, and notify you about important updates regarding your purchases or account. Your data helps us personalize your shopping experience, making it easier and more enjoyable each time you visit.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">3. Sharing Your Information</h2>
+            <p class="privacy-policy-text">
+                We value your privacy and do not sell or rent your personal information to third parties. However, we may share your data with trusted service providers who assist us in operating our website, conducting business activities, or providing services to you. These partners are contractually obligated to safeguard your information. We may also disclose your information when required by law, to enforce our site policies, or to protect our rights, property, or safety.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">4. Protecting Your Information</h2>
+            <p class="privacy-policy-text">
+                We implement a range of security measures to maintain the safety of your personal data. This includes using Secure Socket Layer (SSL) technology to encrypt sensitive information, maintaining secure servers, and restricting access to authorized personnel only. Despite our efforts, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security. However, we continuously monitor our systems for potential vulnerabilities and attacks.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">5. Cookies and Tracking Technologies</h2>
+            <p class="privacy-policy-text">
+                Our website uses cookies, which are small data files stored on your device, to enhance your browsing experience. Cookies help us remember your preferences, keep you logged in, and analyze website traffic. You have the option to accept or decline cookies through your browser settings. Please note that disabling cookies may impact the functionality of certain features on our website.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">6. Third-Party Services</h2>
+            <p class="privacy-policy-text">
+                We may use third-party providers, such as payment processors and analytics companies, to perform services on our behalf. These providers may have access to personal information needed to perform their functions but are prohibited from using it for other purposes. We encourage you to review the privacy policies of any third-party services you interact with through our site.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">7. Your Data Rights</h2>
+            <p class="privacy-policy-text">
+                You have the right to access, update, or delete your personal information at any time. You may also opt-out of receiving promotional emails by clicking the unsubscribe link included in every email. If you would like to exercise any of your data rights, please contact us directly, and we will respond promptly in accordance with applicable laws.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">8. Children's Privacy</h2>
+            <p class="privacy-policy-text">
+                Our website is intended for a general audience and is not directed toward children under the age of 13. We do not knowingly collect personal information from children. If you believe that we have unintentionally collected data from a child without parental consent, please contact us immediately so we can remove the information.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">9. Changes to This Policy</h2>
+            <p class="privacy-policy-text">
+                We reserve the right to modify or update this Privacy Policy at any time to reflect changes in our practices or legal requirements. Any changes will be posted on this page, and we encourage you to review it periodically. Continued use of our site after changes have been made constitutes your acceptance of the updated policy.
+            </p>
+        </div>
+
+        <div class="privacy-policy-item">
+            <h2 class="privacy-policy-heading">10. Contacting Us</h2>
+            <p class="privacy-policy-text">
+                If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please do not hesitate to contact us. You can reach us via email at <a href="mailto:privacy@ourstore.com" class="privacy-policy-link">privacy@ourstore.com</a> or by mail at OurStore Privacy Team, 1234 Market Street, Suite 567, Cityville, Country.
+            </p>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

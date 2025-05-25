@@ -1,0 +1,533 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Admin Layout Styles */
+    :root {
+        --sidebar-width: 280px;
+        --sidebar-bg: #1a1a2e;
+        --sidebar-text: #f8f9fa;
+        --sidebar-accent: #4361ee;
+        --sidebar-hover: rgba(67, 97, 238, 0.2);
+        --main-bg: #f5f7fa;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    body{
+        width: 100%;
+    }
+    .admin-container {
+        display: flex;
+        min-height: 100vh;
+        background-color: var(--main-bg);
+    }
+
+    /* Sidebar Styles */
+    .admin-sidebar {
+        width: var(--sidebar-width, 250px); /* Added fallback */
+        background: linear-gradient(180deg, var(--sidebar-bg, #0f172a), #16213e);
+        color: var(--sidebar-text, #e2e8f0);
+        position: fixed;
+        height: 100vh;
+        z-index: 100;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition, all 0.3s ease);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        margin-bottom:20px;
+    }
+
+    .admin-sidebar:hover {
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-sidebar h2 {
+        padding: 1.5rem;
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.2);
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        flex-shrink: 0; /* Prevent title from shrinking */
+    }
+
+    .admin-sidebar h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sidebar-accent, #4f46e5), transparent);
+        border-radius: 3px;
+    }
+
+    .admin-sidebar nav {
+        padding: 1.5rem 0;
+        flex-grow: 1; /* Allow nav to take available space */
+    }
+
+    .admin-sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column; /* Ensure vertical layout */
+    }
+
+    .admin-sidebar li {
+        position: relative;
+        margin: 0.5rem 0;
+    }
+
+    .admin-sidebar li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: var(--sidebar-accent, #4f46e5);
+        transform: scaleY(0);
+        transform-origin: center;
+        transition: var(--transition, all 0.3s ease);
+    }
+
+    .admin-sidebar li:hover::before {
+        transform: scaleY(1);
+    }
+
+    .admin-sidebar a {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        color: var(--sidebar-text, #e2e8f0);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition, all 0.3s ease);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .admin-sidebar a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, var(--sidebar-hover, rgba(255, 255, 255, 0.1)), transparent);
+        transition: var(--transition, all 0.3s ease);
+    }
+
+    .admin-sidebar a:hover::before {
+        left: 100%;
+    }
+
+    .admin-sidebar a:hover {
+        background-color: var(--sidebar-hover, rgba(255, 255, 255, 0.1));
+        padding-left: 2rem;
+    }
+
+    .admin-sidebar a::after {
+        content: '→';
+        position: absolute;
+        right: 1.5rem;
+        opacity: 0;
+        transition: var(--transition, all 0.3s ease);
+    }
+
+    .admin-sidebar a:hover::after {
+        opacity: 1;
+        right: 1rem;
+    }
+
+    /* Active Link Styles */
+    .admin-sidebar a.active {
+        background-color: var(--sidebar-hover, rgba(255, 255, 255, 0.1));
+        color: white;
+        font-weight: 600;
+    }
+
+    .admin-sidebar a.active::before {
+        background: var(--sidebar-accent, #4f46e5);
+    }
+
+    .admin-sidebar li.active::before {
+        transform: scaleY(1);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        margin-top: auto; /* Push to bottom */
+        margin-bottom: 1rem;
+        transition: var(--transition, all 0.3s ease);
+    }
+
+    .theme-toggle:hover {
+        background-color: var(--sidebar-hover, rgba(255, 255, 255, 0.1));
+    }
+
+    .theme-toggle i {
+        margin-right: 0.8rem;
+        font-style: normal;
+    }
+
+    /* Sidebar Icons */
+    .admin-sidebar a[href*="dashboard"]::before {
+        content: '📊';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="order"]::before {
+        content: '📦';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="product"]::before {
+        content: '🛍️';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="review"]::before {
+        content: '⭐';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="discount"]::before {
+        content: '💲';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="transaction"]::before {
+        content: '💳';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="add_product"]::before {
+        content: '➕';
+        margin-right: 0.8rem;
+    }
+
+    /* Main Content Area */
+    .admin-main {
+        flex: 1;
+        margin-left: var(--sidebar-width, 250px);
+        padding: 2rem;
+        transition: var(--transition, all 0.3s ease);
+    }
+
+    /* Sidebar Icons (using pseudo-elements) */
+    .admin-sidebar a[href*="dashboard"]::before {
+        content: '📊';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="order"]::before {
+        content: '📦';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="product"]::before {
+        content: '🛍️';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="review"]::before {
+        content: '⭐';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="discount"]::before {
+        content: '💲';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="transaction"]::before {
+        content: '💳';
+        margin-right: 0.8rem;
+    }
+
+    .admin-sidebar a[href*="add_product"]::before {
+        content: '➕';
+        margin-right: 0.8rem;
+    }
+    
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .admin-sidebar {
+            width: 80px;
+            overflow: hidden;
+        }
+
+        .admin-sidebar h2 {
+            font-size: 0;
+            padding: 1.5rem 0;
+        }
+
+        .admin-sidebar h2::after {
+            width: 40%;
+            left: 30%;
+        }
+
+        .admin-sidebar a {
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .admin-sidebar a span {
+            display: none;
+        }
+
+        .admin-sidebar a::before {
+            margin-right: 0;
+        }
+
+        .admin-sidebar a:hover {
+            padding-left: 0;
+        }
+
+        .admin-sidebar a::after {
+            display: none;
+        }
+
+        .admin-main {
+            margin-left: 80px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .admin-container {
+            flex-direction: column;
+        }
+
+        .admin-sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-sidebar nav {
+            display: flex;
+            overflow-x: auto;
+            padding: 0;
+        }
+
+        .admin-sidebar ul {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .admin-sidebar li {
+            flex: 0 0 auto;
+            margin: 0;
+        }
+
+        .admin-sidebar a {
+            padding: 1rem;
+            white-space: nowrap;
+        }
+
+        .admin-sidebar a span {
+            display: inline;
+        }
+
+        .admin-sidebar h2 {
+            display: none;
+        }
+
+        .admin-main {
+            margin-left: 0;
+            padding: 1.5rem;
+        }
+    }
+
+    /* Scrollbar for Sidebar */
+    .admin-sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .admin-sidebar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-sidebar::-webkit-scrollbar-thumb {
+        background: var(--sidebar-accent);
+        border-radius: 3px;
+    }
+
+    /* Animation for Sidebar Items */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .admin-sidebar li {
+        animation: slideIn 0.4s ease-out forwards;
+        opacity: 0;
+    }
+
+    .admin-sidebar li:nth-child(1) { animation-delay: 0.1s; }
+    .admin-sidebar li:nth-child(2) { animation-delay: 0.2s; }
+    .admin-sidebar li:nth-child(3) { animation-delay: 0.3s; }
+    .admin-sidebar li:nth-child(4) { animation-delay: 0.4s; }
+    .admin-sidebar li:nth-child(5) { animation-delay: 0.5s; }
+    .admin-sidebar li:nth-child(6) { animation-delay: 0.6s; }
+    .admin-sidebar li:nth-child(7) { animation-delay: 0.7s; }
+
+    /* Theme Toggle Switch (Bonus) */
+    .theme-toggle {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        color: var(--sidebar-text);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .theme-toggle i {
+        margin-right: 0.5rem;
+    }
+
+    /* Badge for Notifications (Bonus) */
+    .menu-badge {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--sidebar-accent);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+
+    @media (max-width: 992px) {
+        .menu-badge {
+            right: 50%;
+            top: 80%;
+            transform: translateX(50%);
+        }
+    }
+</style>
+
+<div class="admin-container">
+    <aside class="admin-sidebar">
+        <h2 style="color:white">Admin Panel</h2>
+         <!-- Theme Toggle (Bonus) -->
+         <div class="theme-toggle">
+            <i>🌓</i>
+            <span style="color:red">Dark Mode</span>
+        </div>
+        <nav>
+            
+            <ul>
+                <li><a href="{% url 'admin:index' %}"><span>Dashboard</span></a></li>
+                <li><a href="{% url 'admin_order_list' %}"><span>Orders</span></a></li>
+                <li><a href="{% url 'admin_product_list' %}"><span>Products</span></a></li>
+                {% comment %} <li><a href="{% url 'admin_review_list' %}"><span>Reviews</span></a></li>
+                <li><a href="{% url 'admin_discount_list' %}"><span>Discounts</span></a></li>
+                <li><a href="{% url 'admin_transaction_list' %}"><span>Transactions</span></a></li> {% endcomment %}
+                <li><a href="{% url 'add_product' %}"><span>Add Product</span></a></li>
+            </ul>
+
+           
+        </nav>
+        
+        
+    </aside>
+    
+    
+    <main class="admin-main">
+        {% block admin_content %}
+        {% endblock %}
+    </main>
+</div>
+
+<script>
+    // Add active class to current page link
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.admin-sidebar a');
+        
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+                link.parentElement.classList.add('active');
+            }
+        });
+        
+        // Theme toggle functionality (bonus)
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark-theme');
+                const isDark = document.documentElement.classList.contains('dark-theme');
+                themeToggle.querySelector('span').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+                
+                // Save preference to localStorage
+                localStorage.setItem('adminTheme', isDark ? 'dark' : 'light');
+            });
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('adminTheme') === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+                themeToggle.querySelector('span').textContent = 'Light Mode';
+            }
+        }
+        
+        // Add click animation to menu items
+        const menuItems = document.querySelectorAll('.admin-sidebar a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                
+                const x = e.clientX - this.getBoundingClientRect().left;
+                const y = e.clientY - this.getBoundingClientRect().top;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 800);
+            });
+        });
+    });
+</script>
+{% endblock content %}

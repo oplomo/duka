@@ -1,0 +1,422 @@
+{% extends "admin/a_base.html" %}
+
+{% block admin_content %}
+<style>
+    /* Base Styles */
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4cc9f0;
+        --dark-color: #1a1a2e;
+        --light-color: #f8f9fa;
+        --success-color: #4ade80;
+        --warning-color: #fbbf24;
+        --danger-color: #f87171;
+        --border-radius: 12px;
+        --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    h1 {
+        text-align: center;
+        margin: 2rem 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--dark-color);
+        position: relative;
+        padding-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        border-radius: 2px;
+    }
+
+    /* Table Container */
+    .table-container {
+        max-width: 95%;
+        margin: 0 auto;
+        padding: 2rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .table-container:hover {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 0.95rem;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    thead {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    th {
+        padding: 1.2rem 1rem;
+        text-align: left;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    th:first-child {
+        border-top-left-radius: var(--border-radius);
+    }
+
+    th:last-child {
+        border-top-right-radius: var(--border-radius);
+    }
+
+    tbody tr {
+        transition: var(--transition);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+        transform: translateX(5px);
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: rgba(245, 247, 250, 0.5);
+    }
+
+    tbody tr:nth-child(even):hover {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+
+    td {
+        padding: 1.2rem 1rem;
+        color: #555;
+        font-weight: 500;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    td:first-child {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    /* Action Links */
+    td a {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: var(--transition);
+        box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    td a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(67, 97, 238, 0.3);
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    }
+
+    /* Product Name Link */
+    td a[href*="admin_product_detail"] {
+        color: var(--primary-color);
+        background: transparent;
+        padding: 0;
+        font-weight: 600;
+        box-shadow: none;
+        text-transform: none;
+        letter-spacing: normal;
+    }
+
+    td a[href*="admin_product_detail"]:hover {
+        color: var(--secondary-color);
+        text-decoration: underline;
+        transform: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .table-container {
+            padding: 1rem;
+        }
+        
+        th, td {
+            padding: 0.8rem 0.5rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+        
+        .table-container {
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+    }
+
+    /* Floating Action Button */
+    .fab {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        cursor: pointer;
+        transition: var(--transition);
+        z-index: 100;
+        text-decoration: none;
+    }
+
+    .fab:hover {
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 10px 25px rgba(67, 97, 238, 0.6);
+    }
+
+    /* Status Badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-active {
+        background-color: rgba(74, 222, 128, 0.2);
+        color: var(--success-color);
+    }
+
+    .status-inactive {
+        background-color: rgba(248, 113, 113, 0.2);
+        color: var(--danger-color);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #888;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #ddd;
+    }
+
+    /* Loading Animation */
+    @keyframes pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+    }
+
+    .loading-row td {
+        animation: pulse 1.5s infinite;
+        background-color: #f5f5f5;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(var(--primary-color), var(--secondary-color));
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-color);
+    }
+
+    /* Floating Labels */
+    .price-cell {
+        position: relative;
+    }
+
+    .price-cell::before {
+        content: '$';
+        position: absolute;
+        left: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .price-cell span {
+        margin-left: 1rem;
+    }
+
+    /* Tooltip */
+    [data-tooltip] {
+        position: relative;
+    }
+
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--dark-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 100;
+    }
+
+    [data-tooltip]:hover::after {
+        opacity: 1;
+        visibility: visible;
+        bottom: calc(100% + 10px);
+    }
+
+    /* Animated Underline */
+    .animated-underline {
+        position: relative;
+    }
+
+    .animated-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+
+    .animated-underline:hover::after {
+        width: 100%;
+    }
+</style>
+
+<div class="table-container">
+    <h1>Product Management</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Seller</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td><a href="{% url 'admin_product_detail' product.id %}" class="animated-underline">{{ product.name }}</a></td>
+                <td>{{ product.seller.username }}</td>
+                <td class="price-cell"><span>{{ product.price }}</span></td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.category.name|default:"None" }}</td>
+                <td>
+                    <a href="{% url 'admin_product_detail' product.id %}" data-tooltip="View Details">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url "add_product" %}" class="fab" data-tooltip="Add New Product">+</a>
+
+<script>
+    // Add some interactive functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+            row.addEventListener('click', function(e) {
+                if (!e.target.closest('a')) {
+                    const link = this.querySelector('td a');
+                    if (link) link.click();
+                }
+            });
+            
+            // Add animation delay for each row
+            const index = Array.from(rows).indexOf(row);
+            row.style.animationDelay = `${index * 0.05}s`;
+        });
+    });
+</script>
+{% endblock %}

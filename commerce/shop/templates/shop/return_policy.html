@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Main section background and padding */
+    .return-policy-section {
+        padding: 80px 20px;
+        background: linear-gradient(to bottom, #f9fafb, #ffffff);
+    }
+    
+    /* Container setup */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Main title */
+    .return-policy-title {
+        font-size: 42px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    /* Introduction paragraph */
+    .return-policy-introduction {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 50px;
+        line-height: 1.8;
+        text-align: center;
+    }
+    
+    /* Each policy item */
+    .return-policy-item {
+        margin-bottom: 50px;
+    }
+    
+    /* Item heading */
+    .return-policy-heading {
+        font-size: 28px;
+        color: #34495e;
+        margin-bottom: 20px;
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .return-policy-heading::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-size: 30px;
+        line-height: 1;
+    }
+    
+    /* Text under each heading */
+    .return-policy-text {
+        font-size: 18px;
+        color: #666;
+        line-height: 1.8;
+        text-align: justify;
+    }
+    
+    /* Unordered list */
+    .return-policy-list {
+        font-size: 18px;
+        color: #666;
+        padding-left: 40px;
+        line-height: 1.8;
+    }
+    
+    .return-policy-list li {
+        margin-bottom: 10px;
+    }
+    
+    /* Email link */
+    .return-policy-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .return-policy-link:hover {
+        color: #2c80b4;
+        text-decoration: underline;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .return-policy-title {
+            font-size: 32px;
+        }
+    
+        .return-policy-heading {
+            font-size: 24px;
+        }
+    
+        .return-policy-text,
+        .return-policy-introduction,
+        .return-policy-list {
+            font-size: 16px;
+        }
+    
+        .container {
+            padding: 20px;
+        }
+    }
+    </style>
+    
+<section class="return-policy-section">
+    <div class="container">
+        <h1 class="return-policy-title">Return & Refund Policy</h1>
+
+        <div class="return-policy-introduction">
+            <p>We want you to be completely satisfied with your purchase. If you are not satisfied, we're here to help you with returns and refunds according to the following policy.</p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Eligibility for Returns</h2>
+            <p class="return-policy-text">
+                To be eligible for a return, your item must be unused, in the same condition that you received it, and in its original packaging. Proof of purchase is also required.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Return Window</h2>
+            <p class="return-policy-text">
+                Returns must be initiated within 30 days of the purchase date. After 30 days, unfortunately, we cannot offer you a refund or exchange.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Non-returnable Items</h2>
+            <ul class="return-policy-list">
+                <li>Gift cards</li>
+                <li>Downloadable software products</li>
+                <li>Personal care items (for hygiene reasons)</li>
+                <li>Customized or personalized products</li>
+            </ul>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">How to Initiate a Return</h2>
+            <p class="return-policy-text">
+                To start a return, please contact our support team at <a href="mailto:returns@ourstore.com" class="return-policy-link">returns@ourstore.com</a>. Include your order number, the reason for the return, and pictures if applicable.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Return Shipping</h2>
+            <p class="return-policy-text">
+                You will be responsible for paying your own shipping costs for returning your item. Shipping costs are non-refundable. If you are returning an expensive item, we recommend using a trackable shipping service or purchasing shipping insurance.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Refunds (if applicable)</h2>
+            <p class="return-policy-text">
+                Once your return is received and inspected, we will notify you via email. If your return is approved, your refund will be processed within 5–7 business days back to your original payment method.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Late or Missing Refunds</h2>
+            <p class="return-policy-text">
+                If you haven’t received your refund within the expected timeframe, first check your bank account again. Then contact your credit card company. If you’ve done all of this and you still have not received your refund, please contact us.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Exchanges</h2>
+            <p class="return-policy-text">
+                We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email first to arrange the exchange.
+            </p>
+        </div>
+
+        <div class="return-policy-item">
+            <h2 class="return-policy-heading">Contact Information</h2>
+            <p class="return-policy-text">
+                For more information about our return policy, please contact us at <a href="mailto:support@ourstore.com" class="return-policy-link">support@ourstore.com</a>.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
