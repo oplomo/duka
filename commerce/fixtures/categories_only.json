@@ -1,0 +1,418 @@
+[
+  {
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics",
+      "description": "Devices and gadgets including phones, laptops, tablets, etc."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 2,
+    "fields": {
+      "name": "Fashion",
+      "description": "Clothing, accessories, and footwear for men, women, and children."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 3,
+    "fields": {
+      "name": "Home & Kitchen",
+      "description": "Furniture, appliances, cookware, and home decor."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 4,
+    "fields": {
+      "name": "Books",
+      "description": "Printed and digital books, magazines, and educational materials."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 5,
+    "fields": {
+      "name": "Health & Beauty",
+      "description": "Personal care, skincare, wellness, and beauty products."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 6,
+    "fields": {
+      "name": "Sports & Outdoors",
+      "description": "Sporting goods, camping gear, fitness equipment, and outdoor apparel."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 7,
+    "fields": {
+      "name": "Toys & Games",
+      "description": "Toys, board games, puzzles, and activities for children and adults."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 8,
+    "fields": {
+      "name": "Groceries",
+      "description": "Food, beverages, and other essential household supplies."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 9,
+    "fields": {
+      "name": "Jewelry & Watches",
+      "description": "Rings, necklaces, bracelets, watches, and other luxury items."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 10,
+    "fields": {
+      "name": "Automotive",
+      "description": "Car parts, accessories, tools, and automotive care products."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 11,
+    "fields": {
+      "name": "Music & Instruments",
+      "description": "Musical instruments, gear, and accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 12,
+    "fields": {
+      "name": "Baby & Kids",
+      "description": "Baby clothes, toys, strollers, and essentials for children."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 13,
+    "fields": {
+      "name": "Office Supplies",
+      "description": "Stationery, furniture, and supplies for home and office work."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 14,
+    "fields": {
+      "name": "Art & Crafts",
+      "description": "Supplies for painting, drawing, knitting, and DIY projects."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 15,
+    "fields": {
+      "name": "Furniture",
+      "description": "Bedroom, living room, office, and outdoor furniture."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 16,
+    "fields": {
+      "name": "Gardening & Outdoors",
+      "description": "Plants, seeds, tools, and accessories for gardening and outdoor spaces."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 17,
+    "fields": {
+      "name": "Pet Supplies",
+      "description": "Pet food, toys, grooming, and care products for pets."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 18,
+    "fields": {
+      "name": "DIY & Tools",
+      "description": "Tools, hardware, and materials for home improvement and repairs."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 19,
+    "fields": {
+      "name": "Software & Technology",
+      "description": "Software applications, operating systems, and tech services."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 20,
+    "fields": {
+      "name": "Cameras & Photography",
+      "description": "Cameras, lenses, tripods, and photography accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 21,
+    "fields": {
+      "name": "Video Games",
+      "description": "Console and PC games, accessories, and gaming hardware."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 22,
+    "fields": {
+      "name": "Watches & Accessories",
+      "description": "Watches, handbags, sunglasses, and fashion accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 23,
+    "fields": {
+      "name": "Health & Wellness",
+      "description": "Supplements, fitness equipment, and products for healthy living."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 24,
+    "fields": {
+      "name": "Gifts & Special Occasion",
+      "description": "Gifts for birthdays, weddings, anniversaries, and other celebrations."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 25,
+    "fields": {
+      "name": "Musical Instruments",
+      "description": "Instruments, accessories, and music equipment for musicians."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 26,
+    "fields": {
+      "name": "Food & Beverage",
+      "description": "Gourmet food, snacks, and specialty drinks."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 27,
+    "fields": {
+      "name": "Smart Home",
+      "description": "Smart devices and home automation products."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 28,
+    "fields": {
+      "name": "Photography & Imaging",
+      "description": "Photography gear, printers, and imaging technology."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 29,
+    "fields": {
+      "name": "Luxury Goods",
+      "description": "High-end fashion, jewelry, and luxury lifestyle items."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 30,
+    "fields": {
+      "name": "Luggage & Bags",
+      "description": "Travel bags, suitcases, backpacks, and luggage accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 31,
+    "fields": {
+      "name": "Shoes",
+      "description": "Footwear for men, women, and children."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 32,
+    "fields": {
+      "name": "Party & Celebration",
+      "description": "Decorations, costumes, and party supplies."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 33,
+    "fields": {
+      "name": "Cleaning Supplies",
+      "description": "Household and industrial cleaning products and tools."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 34,
+    "fields": {
+      "name": "Wine & Spirits",
+      "description": "Alcoholic beverages, wines, and spirits."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 35,
+    "fields": {
+      "name": "Hardware",
+      "description": "Fasteners, nails, screws, and other building hardware."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 36,
+    "fields": {
+      "name": "Travel & Vacation",
+      "description": "Travel services, vacation packages, and accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 37,
+    "fields": {
+      "name": "Appliances",
+      "description": "Home and kitchen appliances, including refrigerators and microwaves."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 38,
+    "fields": {
+      "name": "Mobile Phones & Accessories",
+      "description": "Phones, chargers, cases, and accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 39,
+    "fields": {
+      "name": "Computers & Tablets",
+      "description": "Laptops, desktops, tablets, and related accessories."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 40,
+    "fields": {
+      "name": "Kitchenware",
+      "description": "Cooking utensils, pots, pans, and kitchen tools."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 41,
+    "fields": {
+      "name": "Home Improvement",
+      "description": "Tools and products for renovation, construction, and home repairs."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 42,
+    "fields": {
+      "name": "Stationery & Office",
+      "description": "Office supplies such as paper, pens, and organizational tools."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 43,
+    "fields": {
+      "name": "Virtual Products",
+      "description": "Digital goods such as eBooks, software, and downloadable content."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 44,
+    "fields": {
+      "name": "Subscription Services",
+      "description": "Subscription boxes, membership services, and digital subscriptions."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 45,
+    "fields": {
+      "name": "Collectibles",
+      "description": "Rare items such as coins, stamps, figurines, and memorabilia."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 46,
+    "fields": {
+      "name": "Religious & Spiritual",
+      "description": "Items for religious practices, prayer, and meditation."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 47,
+    "fields": {
+      "name": "Furniture & Lighting",
+      "description": "Furniture, lighting fixtures, and decor for home and office spaces."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 48,
+    "fields": {
+      "name": "Outdoor Adventure",
+      "description": "Equipment and apparel for outdoor activities like hiking and trekking."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 49,
+    "fields": {
+      "name": "Tools & Equipment",
+      "description": "Hand tools, power tools, and construction equipment for professionals."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 50,
+    "fields": {
+      "name": "Kitchen & Dining",
+      "description": "Kitchen essentials like cutlery, tableware, and storage containers."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 51,
+    "fields": {
+      "name": "Office Furniture",
+      "description": "Desks, chairs, filing cabinets, and ergonomic furniture for offices."
+    }
+  },
+  {
+    "model": "shop.category",
+    "pk": 52,
+    "fields": {
+      "name": "Gardening Tools",
+      "description": "Tools and equipment for garden maintenance and landscaping."
+    }
+  }
+]

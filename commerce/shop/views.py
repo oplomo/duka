@@ -264,8 +264,10 @@ def product_detail(request, pk):
     reviews = Review.objects.filter(order__product=product)
     review_change_message = ""
 
-    if user_can_review(request.user, product):
+    # Only check review rights for authenticated users
+    if request.user.is_authenticated and user_can_review(request.user, product):
         products_with_review_rights.append(product.id)
+
     # Get related products (excluding current product)
 
     for review in reviews:
