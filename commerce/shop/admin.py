@@ -96,3 +96,41 @@ from .models import Color  # adjust path if needed
 class ColorAdmin(admin.ModelAdmin):
     list_display = ('name', 'hex_code')  # shows name and hex in admin list
     search_fields = ('name', 'hex_code') 
+
+
+from django.contrib import admin
+from .models import County, Constituency, Ward
+
+
+# Inline for Constituencies within a County
+class ConstituencyInline(admin.TabularInline):
+    model = Constituency
+    extra = 0
+
+
+# Inline for Wards within a Constituency
+class WardInline(admin.TabularInline):
+    model = Ward
+    extra = 0
+
+
+@admin.register(County)
+class CountyAdmin(admin.ModelAdmin):
+    list_display = ('county_name', 'latitude', 'longitude')
+    search_fields = ('county_name',)
+    inlines = [ConstituencyInline]
+
+
+@admin.register(Constituency)
+class ConstituencyAdmin(admin.ModelAdmin):
+    list_display = ('constituency_name', 'county')
+    search_fields = ('constituency_name',)
+    list_filter = ('county',)
+    inlines = [WardInline]
+
+
+@admin.register(Ward)
+class WardAdmin(admin.ModelAdmin):
+    list_display = ('ward_name', 'constituency')
+    search_fields = ('ward_name',)
+    list_filter = ('constituency__county',)

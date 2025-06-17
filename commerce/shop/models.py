@@ -260,3 +260,36 @@ class MPesaTransaction(models.Model):
 
     def __str__(self):
         return f"{self.transaction_id} - {self.status}"
+
+class County(models.Model):
+    id = models.AutoField(primary_key=True)
+    county_name = models.CharField(max_length=100, unique=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+
+    def __str__(self):
+        return self.county_name
+
+
+class Constituency(models.Model):
+    id = models.AutoField(primary_key=True)
+    county = models.ForeignKey(
+        County, on_delete=models.CASCADE, related_name="constituencies"
+    )
+    constituency_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return f"{self.constituency_name}, {self.county.county_name}"
+
+
+class Ward(models.Model):
+    id = models.AutoField(
+        primary_key=True
+    )  # Explicitly defining the ID field (optional)
+    constituency = models.ForeignKey(
+        Constituency, on_delete=models.CASCADE, related_name="wards"
+    )
+    ward_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return f"{self.ward_name}, {self.constituency.constituency_name}"
