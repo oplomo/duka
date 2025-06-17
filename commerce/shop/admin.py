@@ -90,3 +90,9 @@ class ReviewAdmin(admin.ModelAdmin):
         obj.signed_credential = generate_review_hash(obj)
 
         super().save_model(request, obj, form, change)
+from .models import Color  # adjust path if needed
+
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'hex_code')  # shows name and hex in admin list
+    search_fields = ('name', 'hex_code') 

@@ -1,0 +1,105 @@
+[
+  {
+    "model": "shop.product",
+    "pk": 1,
+    "fields": {
+      "seller": 1,
+      "name": "Bathroom Led Tv Smart TV",
+      "description": "My friend, welcome to our store, if you need other models of this product, please contact me, I will send the product link for you to buy! If you have any questions, please send me a private message or contact me through WhatsApp or email. Whatsapp:+86 19967880889 E-mail: zj19967880889@gmail.com",
+      "price": "60000.00",
+      "stock": 2,
+      "category": 1,
+      "color_options": [
+        7
+      ],
+      "size": "22/24/32/39/43/49 Inch",
+      "sku": "ELE-01A35D",
+      "source": "aliexpress",
+      "aliexpress_url": "https://www.aliexpress.com/item/1005009218895253.html?spm=a2g0o.productlist.main.18.6b8fV04dV04dpm&algo_pvid=c3369f7a-e00f-496e-8163-7bbe3d14686d&algo_exp_id=c3369f7a-e00f-496e-8163-7bbe3d14686d-17&pdp_ext_f=%7B%22order%22%3A%22-1%22%2C%22eval%22%3A%221%22%7D&pdp_npi=4%40dis%21KES%2155367.00%2155367.00%21%21%212917.07%212917.07%21%402141122217501391372251501ea4cf%2112000048354811111%21sea%21KE%216158812561%21ABX&curPageLogUid=v2pAx8DkFg1W&utparam-url=scene%3Asearch%7Cquery_from%3A#nav-description",
+      "supplier_name": "Roc's Smart Home Appliances Store",
+      "supplier_contact": null,
+      "supplier_price": "55367.00",
+      "delivery_fee": "3000.00",
+      "created_at": "2025-06-17T07:12:25.935246+00:00",
+      "updated_at": "2025-06-17T07:17:37.468124+00:00",
+      "images": [
+        {
+          "image": "product_images/Screenshot_2025-06-17_095334.png",
+          "alt_text": ""
+        },
+        {
+          "image": "product_images/Screenshot_2025-06-17_095314.png",
+          "alt_text": ""
+        },
+        {
+          "image": "product_images/Screenshot_2025-06-17_095242.png",
+          "alt_text": ""
+        }
+      ]
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 2,
+    "fields": {
+      "seller": 1,
+      "name": " Huawei Xiaomi Men GPS Track Smart Watch",
+      "description": "                    Features\r\n\r\n1. 1.85-inch HD screen with clear and vivid picture for easy viewing.\r\n\r\n2. 710mAh battery capacity provides you with long-lasting battery life.\r\n\r\n3. HD Bluetooth call smart watch:Make and receive calls hands-free with the HD Bluetooth call feature.\r\n\r\n4. Heart Monitor :Monitor your heart rate during workouts and throughout the day with the built-in heart monitor.\r\n\r\n5. IP68 waterproof rating to withstand harsh weather conditions and heavy sweating.\r\n\r\n6. With 400+ Watch Faces, Maximize your style wherever you go, with a huge selection ofvibrant watchfaces or keep things fresh with the new Portraitwatch face option.\r\n\r\n7. For Android and iOS: This smartwatch is compatible with Android and iOS devices, a versatile choice for all smartphone users.\r\n\r\n\r\n\r\nProduct Parameters:Call reminder push, SMS reminder push, WeChat reminder push, QQ reminder push, exercise record (step counting, mileage, etc.), trajectory map, sleep monitoring, sedentary reminder, calorie calculation, stopwatch, low battery reminder, hand up to light screen, fast charging, ultra-low power consumption, heart rate, blood pressure, vibration, sports mode, remote photography, music control, intelligent alarm, weather forecast, HD large screen, multi-dial switching, WeChat sports,call\r\n\r\nCompatible System: APP (Da Fit ) Android4.0 and above、ISO9.0 and above\r\n\r\nTouch type: full screen touch\r\n\r\nBLE5.3 Bluetooth chip with low energy consumption\r\n\r\nBattery type: Polymer soft package\r\n\r\nbatteryCapacity: 710mAh\r\n\r\nCharging method: magnetic charging\r\n\r\nLanguage: English\r\n\r\nLanguages: Simplified Chinese, English, French, Spanish, Japanese, Russian, Portuguese\r\n\r\nRemarks\r\n\r\n1. After receiving the watch, please use the charging adapter to charge the watch for more than 2 hours. 2.\r\n\r\n2. Please scan the QR code in the manual to download the APP before use.\r\n\r\nPacking ListSmartwatch*1Charging cable*1Manual*1    \r\n                ",
+      "price": "5000.00",
+      "stock": 2,
+      "category": 22,
+      "color_options": [
+        1,
+        2,
+        12
+      ],
+      "size": "1.85 Inch ",
+      "sku": "WAT-3B2C3B",
+      "source": "local",
+      "aliexpress_url": "",
+      "supplier_name": "samsung shop nairobi",
+      "supplier_contact": "+254709091212",
+      "supplier_price": "4020.00",
+      "delivery_fee": null,
+      "created_at": "2025-06-17T07:33:28.877275+00:00",
+      "updated_at": "2025-06-17T07:33:28.877275+00:00",
+      "images": []
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 5,
+    "fields": {
+      "seller": 1,
+      "name": "Portable Outdoor Cooking Tableware ",
+      "description": "Camping Pots Cookware Set Portable Outdoor Cooking Tableware for Hiking Trekking Picnic Fishing Mountaineering Easy Storage",
+      "price": "4000.00",
+      "stock": 1,
+      "category": null,
+      "color_options": [
+        7,
+        11
+      ],
+      "size": "",
+      "sku": "-15A745",
+      "source": "local",
+      "aliexpress_url": "",
+      "supplier_name": "Shop1104538241 Store",
+      "supplier_contact": "",
+      "supplier_price": "3412.00",
+      "delivery_fee": null,
+      "created_at": "2025-06-17T08:30:14.994966+00:00",
+      "updated_at": "2025-06-17T08:30:14.994966+00:00",
+      "images": [
+        {
+          "image": "product_images/Screenshot_2025-06-17_110401_8NFjnci.png",
+          "alt_text": ""
+        },
+        {
+          "image": "product_images/Screenshot_2025-06-17_110213_Bu3K5Ex.png",
+          "alt_text": ""
+        }
+      ]
+    }
+  }
+]

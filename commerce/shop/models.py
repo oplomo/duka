@@ -7,6 +7,25 @@ from django.urls import reverse
 from django.db.models import Avg
 import uuid
 from decimal import Decimal
+from django.utils.text import slugify
+
+
+
+
+import json
+import os
+from django.db.models.signals import post_save, post_delete, m2m_changed
+from django.dispatch import receiver
+from django.db import transaction
+
+BACKUP_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'backups',
+    'products_backup.json'
+)
+
+
+
 
 # -----------------------
 # Categories
@@ -26,25 +45,71 @@ class Category(models.Model):
 # -----------------------
 
 
+class Color(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # e.g. Red
+    hex_code = models.CharField(max_length=7, unique=True, help_text="Hex color code, e.g. #FF0000")
+
+    def __str__(self):
+        return f"{self.name} ({self.hex_code})"
+
+
 class Product(models.Model):
+    # Seller or admin who posted the product
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products")
+
+    # Public/customer-facing fields
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=1)
     category = models.ForeignKey(
-        Category,
+        'Category',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="products",
     )
+    color_options = models.ManyToManyField(Color, blank=True, related_name='products')
+    size = models.CharField(max_length=100, blank=True, help_text="e.g. M, 42, 10cm x 5cm")
+    sku = models.CharField(max_length=100, unique=True, blank=True, null=True, help_text="Auto-generated stock keeping unit")
+    
+    delivery_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text="Delivery fee for this product")
+
+    # Source information
+    LOCAL = 'local'
+    ALIEXPRESS = 'aliexpress'
+    SOURCE_CHOICES = [
+        (LOCAL, 'Local'),
+        (ALIEXPRESS, 'AliExpress'),
+    ]
+    source = models.CharField(max_length=20, choices=SOURCE_CHOICES, default=LOCAL)
+
+    # Admin-only / backend fields
+    aliexpress_url = models.URLField(max_length=5000,blank=True, null=True, help_text="AliExpress product page URL")
+    supplier_name = models.CharField(max_length=255, blank=True, null=True, help_text="Name of local supplier")
+    supplier_contact = models.CharField(max_length=255, blank=True, null=True, help_text="Phone, email, or other contact")
+    supplier_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, help_text="Original price from supplier")
+
+    # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+
+    def save(self, *args, **kwargs):
+        if not self.sku:
+            prefix = ""
+            if self.category:
+                prefix = slugify(self.category.name)[:3].upper()  # e.g. "ELE" from "Electronics"
+            unique_code = str(uuid.uuid4()).split("-")[0][:6].upper()  # short unique part
+            self.sku = f"{prefix}-{unique_code}"  # e.g. ELE-7FA9C1
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
+        from django.urls import reverse
         return reverse("product_detail", kwargs={"pk": self.pk})
 
     def average_rating(self):
@@ -54,6 +119,9 @@ class Product(models.Model):
             ]
             or 0
         )
+
+
+
 
 
 class ProductImage(models.Model):

@@ -160,6 +160,55 @@
         font-size: 0.9rem;
     }
 
+
+
+    .image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+    .preview-item {
+        position: relative;
+        width: 120px;
+        height: 120px;
+    }
+
+    .image-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+
+    .remove-image {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    }
+
+    .remove-image:hover {
+        background: #c0392b;
+    }
+
+
+    
+
     /* Responsive Design */
     @media (max-width: 768px) {
         .product-form-container {
@@ -172,7 +221,6 @@
         }
     }
 </style>
-
 <div class="product-form-container">
     <div class="form-header">
         <h1>Add a New Product</h1>
@@ -188,143 +236,325 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
-        <!-- Product Name -->
-        <div class="form-group">
-            <label for="name" class="form-label required">Product Name</label>
-            <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                class="form-control" 
-                placeholder="Enter product name"
-                value="{{ preserved_data.name|default:'' }}"
-                required
-            >
+        <!-- Basic Information Section -->
+        <div class="form-section">
+            <h2>Basic Information</h2>
+            
+            <div class="form-group">
+                <label for="name" class="form-label required">Product Name</label>
+                <input type="text" id="name" name="name" class="form-control" 
+                       value="{{ preserved_data.name|default:'' }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description" class="form-label required">Description</label>
+                <textarea id="description" name="description" class="form-control" required>
+                    {{ preserved_data.description|default:'' }}
+                </textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" name="category" class="form-control">
+                    <option value="">Select a category</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" 
+                            {% if preserved_data.category == category.id|stringformat:"i" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
         
-        <!-- Category -->
-        <div class="form-group">
-            <label for="category" class="form-label">Category</label>
-            <select id="category" name="category" class="form-control">
-                <option value="">Select a category (optional)</option>
-                {% for category in categories %}
-                <option 
-                    value="{{ category.id }}"
-                    {% if preserved_data.category == category.id|stringformat:"i" %}selected{% endif %}
-                >
-                    {{ category.name }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-        
-        <!-- Description -->
-        <div class="form-group">
-            <label for="description" class="form-label required">Product Description</label>
-            <textarea 
-                id="description" 
-                name="description" 
-                class="form-control" 
-                placeholder="Describe your product in detail"
-                required
-            >{{ preserved_data.description|default:'' }}</textarea>
-        </div>
-        
-        <!-- Price and Stock -->
-        <div class="form-row" style="display: flex; gap: 1.5rem;">
-            <div class="form-group" style="flex: 1;">
-                <label for="price" class="form-label required">Price</label>
-                <div style="position: relative;">
-                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #7f8c8d;">$</span>
-                    <input 
-                        type="number" 
-                        id="price" 
-                        name="price" 
-                        class="form-control" 
-                        step="0.01" 
-                        min="0" 
-                        placeholder="0.00"
-                        value="{{ preserved_data.price|default:'' }}"
-                        required
-                        style="padding-left: 30px;"
-                    >
+        <!-- Pricing & Inventory Section -->
+        <div class="form-section">
+            <h2>Pricing & Inventory</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price" class="form-label required">Price ($)</label>
+                    <input type="number" id="price" name="price" class="form-control" 
+                           step="0.01" min="0" value="{{ preserved_data.price|default:'' }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stock" class="form-label required">Stock</label>
+                    <input type="number" id="stock" name="stock" class="form-control" 
+                           min="1" value="{{ preserved_data.stock|default:'1' }}" required>
                 </div>
             </div>
             
-            <div class="form-group" style="flex: 1;">
-                <label for="stock" class="form-label required">Stock</label>
-                <input 
-                    type="number" 
-                    id="stock" 
-                    name="stock" 
-                    class="form-control" 
-                    min="1" 
-                    value="{{ preserved_data.stock|default:'1' }}"
-                    required
-                >
-                <small class="upload-hint">Minimum stock is 1</small>
+            <div class="form-group">
+                <label for="size" class="form-label">Size/Dimensions</label>
+                <input type="text" id="size" name="size" class="form-control" 
+                       placeholder="e.g. M, 42, 10x5cm" value="{{ preserved_data.size|default:'' }}">
             </div>
         </div>
         
-        <!-- Image Upload -->
-        <div class="form-group">
-            <label class="form-label">Product Images</label>
-            <div class="image-upload-container">
-                <label for="images" class="image-upload-label">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <div class="upload-text">Drag & drop images here or click to browse</div>
-                    <div class="upload-hint">Upload at least one high-quality image (Max 5MB each)</div>
-                    <input 
-                        type="file" 
-                        id="images" 
-                        name="images" 
-                        multiple 
-                        accept="image/*"
-                        style="display: none;"
-                    >
-                </label>
+     <!-- Color Options -->
+<div class="form-section" style="margin-bottom: 20px;">
+    <h2 style="margin-bottom: 15px; font-size: 1.2rem; color: #333;">Color Options</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px;">
+        {% for color in colors %}
+        <div style="position: relative;">
+            <input 
+                type="checkbox" 
+                id="color-{{ color.id }}" 
+                name="colors" 
+                value="{{ color.id }}"
+                {% if color.id|stringformat:"i" in preserved_data.colors %}checked{% endif %}
+                style="position: absolute; opacity: 0;"
+            >
+            <label 
+                for="color-{{ color.id }}" 
+                style="
+                    display: block;
+                    height: 80px;
+                    border-radius: 8px;
+                    background-color: {{ color.hex_code }};
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    position: relative;
+                    overflow: hidden;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                "
+                onmouseover="this.style.transform='scale(1.05)'" 
+                onmouseout="this.style.transform='scale(1)'"
+            >
+                <span style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: rgba(0,0,0,0.6);
+                    color: white;
+                    padding: 5px;
+                    font-size: 0.7rem;
+                    text-align: center;
+                    text-transform: capitalize;
+                ">{{ color.name }}</span>
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+        
+        <!-- Product Images -->
+        <!-- Product Images -->
+        <div class="form-section">
+            <h2>Product Images</h2>
+            <div class="form-group">
+                <div class="image-upload-container">
+                    <label for="images" class="image-upload-label">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">Drag & drop images here or click to browse</div>
+                        <div class="upload-hint">Upload at least one high-quality image (Max 5MB each)</div>
+                        <input type="file" id="images" name="images" multiple accept="image/*" style="display: none;">
+                    </label>
+                </div>
+                <div class="image-preview-container" id="imagePreview">
+                    <!-- Preview images will appear here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Supplier Information -->
+        <div class="form-section">
+            <h2>Supplier Information</h2>
+            
+            <div class="form-group">
+                <label for="source" class="form-label">Product Source</label>
+                <select id="source" name="source" class="form-control">
+                    {% for value, label in source_choices %}
+                    <option value="{{ value }}" 
+                            {% if preserved_data.source|default:'local' == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
             
-            <!-- Image Preview Area -->
-            <div class="image-preview-container" id="imagePreview">
-                <!-- Preview images will appear here -->
+            <div class="form-group">
+                <label for="supplier_name" class="form-label">Supplier Name</label>
+                <input type="text" id="supplier_name" name="supplier_name" class="form-control" 
+                       value="{{ preserved_data.supplier_name|default:'' }}">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="supplier_contact" class="form-label">Supplier Contact</label>
+                    <input type="text" id="supplier_contact" name="supplier_contact" class="form-control" 
+                           value="{{ preserved_data.supplier_contact|default:'' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="supplier_price" class="form-label">Supplier Price ($)</label>
+                    <input type="number" id="supplier_price" name="supplier_price" class="form-control" 
+                           step="0.01" min="0" value="{{ preserved_data.supplier_price|default:'' }}">
+                </div>
+            </div>
+            
+            <div class="form-group" id="aliexpressField" 
+                 style="display: {% if preserved_data.source|default:'local' == 'aliexpress' %}block{% else %}none{% endif %};">
+                <label for="aliexpress_url" class="form-label">AliExpress URL</label>
+                <input type="url" id="aliexpress_url" name="aliexpress_url" class="form-control" 
+                       value="{{ preserved_data.aliexpress_url|default:'' }}">
             </div>
         </div>
+
+        <div class="form-group" id="deliveryFeeGroup"
+            style="display: {% if preserved_data.source|default:'local' == 'aliexpress' %}block{% else %}none{% endif %};">
+            <label for="delivery_fee" class="form-label">Delivery Fee ($)</label>
+            <input type="number" id="delivery_fee" name="delivery_fee" class="form-control"
+                step="0.01" min="0" value="{{ preserved_data.delivery_fee|default:'' }}">
+        </div>
+
         
-        <!-- Submit Button -->
         <button type="submit" class="submit-btn">
             <i class="fas fa-plus-circle"></i> Add Product
         </button>
     </form>
 </div>
 
+
+
 <script>
-    // Image preview functionality
-    document.getElementById('images').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('imagePreview');
-        previewContainer.innerHTML = ''; // Clear previous previews
-        
-        const files = event.target.files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            if (file.type.match('image.*')) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('image-preview');
-                    previewContainer.appendChild(img);
-                }
-                
-                reader.readAsDataURL(file);
-            }
+document.querySelectorAll('input[name="colors"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const label = this.nextElementSibling;
+        if (this.checked) {
+            label.style.boxShadow = '0 0 0 3px #3498db';
+            label.style.border = '2px solid white';
+        } else {
+            label.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            label.style.border = 'none';
         }
     });
+    
+    // Initialize checked state
+    if (checkbox.checked) {
+        checkbox.nextElementSibling.style.boxShadow = '0 0 0 3px #3498db';
+        checkbox.nextElementSibling.style.border = '2px solid white';
+    }
+});
 </script>
 
+
+<script>
+     // Show/hide AliExpress URL field based on source selection
+   document.getElementById('source').addEventListener('change', function() {
+    const showAli = this.value === 'aliexpress';
+    document.getElementById('aliexpressField').style.display = showAli ? 'block' : 'none';
+    document.getElementById('deliveryFeeGroup').style.display = showAli ? 'block' : 'none';
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('images');
+    const previewContainer = document.getElementById('imagePreview');
+    const maxFiles = 10; // Maximum number of images allowed
+    const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    // Handle drag and drop
+    const uploadLabel = document.querySelector('.image-upload-label');
+    
+    uploadLabel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadLabel.classList.add('dragover');
+    });
+
+    uploadLabel.addEventListener('dragleave', () => {
+        uploadLabel.classList.remove('dragover');
+    });
+
+    uploadLabel.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadLabel.classList.remove('dragover');
+        if (e.dataTransfer.files.length) {
+            imageInput.files = e.dataTransfer.files;
+            handleFiles(imageInput.files);
+        }
+    });
+
+    // Handle file selection
+    imageInput.addEventListener('change', function() {
+        if (this.files.length) {
+            handleFiles(this.files);
+        }
+    });
+
+    // Process selected files
+    function handleFiles(files) {
+        // Clear previous previews but keep existing files
+        previewContainer.innerHTML = '';
+        
+        // Validate number of files
+        if (files.length > maxFiles) {
+            alert(`You can upload maximum ${maxFiles} images at once.`);
+            return;
+        }
+
+        // Process each file
+        Array.from(files).forEach((file, index) => {
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                alert(`File ${file.name} is not an image.`);
+                return;
+            }
+
+            // Validate file size
+            if (file.size > maxFileSize) {
+                alert(`File ${file.name} exceeds 5MB limit.`);
+                return;
+            }
+
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'image-preview';
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'remove-image';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.onclick = function() {
+                    previewItem.remove();
+                    removeFileFromInput(index);
+                };
+                
+                previewItem.appendChild(img);
+                previewItem.appendChild(removeBtn);
+                previewContainer.appendChild(previewItem);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Remove file from input
+    function removeFileFromInput(index) {
+        const dt = new DataTransfer();
+        const files = imageInput.files;
+        
+        for (let i = 0; i < files.length; i++) {
+            if (index !== i) {
+                dt.items.add(files[i]);
+            }
+        }
+        
+        imageInput.files = dt.files;
+    }
+});
+</script>
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 

@@ -192,17 +192,34 @@ def product_list(request):
 
     return render(request, "shop/product_list.html", context)
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.utils.text import slugify
+from .models import Product, Category, ProductImage, Color
+import uuid
 
 @login_required
 def add_product(request):
     if request.method == "POST":
-        # Process form data directly
+        # Process form data
         name = request.POST.get("name")
         category_id = request.POST.get("category")
         description = request.POST.get("description")
         price = request.POST.get("price")
         stock = request.POST.get("stock")
-        images = request.FILES.getlist("images")  # Get multiple images
+        size = request.POST.get("size")
+        color_ids = request.POST.getlist("colors")
+        source = request.POST.get("source", "local")
+        supplier_name = request.POST.get("supplier_name")
+        supplier_contact = request.POST.get("supplier_contact")
+        supplier_price = request.POST.get("supplier_price")
+        aliexpress_url = request.POST.get("aliexpress_url")
+        delivery_fee = request.POST.get('delivery_fee') or 0
+
+        images = request.FILES.getlist("images")
+
+
 
         # Validate required fields
         if not all([name, description, price, stock]):
@@ -212,47 +229,69 @@ def add_product(request):
                 {
                     "error": "Please fill in all required fields",
                     "categories": Category.objects.all(),
+                    "colors": Color.objects.all(),
                     "preserved_data": request.POST,
                 },
             )
 
         try:
-            # Create the product
-            product = Product(
-                seller=request.user,
-                name=name,
-                description=description,
-                price=price,
-                stock=stock,
-            )
+            with transaction.atomic():
+                # Create the product
+                product = Product(
+                    seller=request.user,
+                    name=name,
+                    description=description,
+                    price=price,
+                    stock=stock,
+                    size=size,
+                    source=source,
+                    supplier_name=supplier_name,
+                    supplier_contact=supplier_contact,
+                    aliexpress_url=aliexpress_url,
+                    delivery_fee = delivery_fee
+                )
 
-            if category_id:
-                product.category = Category.objects.get(id=category_id)
+                # Handle optional decimal field
+                if supplier_price:
+                    product.supplier_price = supplier_price
 
-            product.save()
+                if category_id:
+                    product.category = Category.objects.get(id=category_id)
 
-            # Save multiple images
-            for image in images:
-                ProductImage.objects.create(product=product, image=image)
+                product.save()
 
-            return redirect("product_list")
+                # Add colors
+                if color_ids:
+                    product.color_options.set(Color.objects.filter(id__in=color_ids))
+
+                # Save multiple images
+                for image in images:
+                    ProductImage.objects.create(product=product, image=image)
+                
+                return redirect("product_list")
 
         except Exception as e:
             return render(
                 request,
                 "shop/add_product.html",
                 {
-                    "error": str(e),
+                    "error": f"An error occurred: {str(e)}",
                     "categories": Category.objects.all(),
+                    "colors": Color.objects.all(),
                     "preserved_data": request.POST,
                 },
             )
 
     # GET request - show empty form
     return render(
-        request, "shop/add_product.html", {"categories": Category.objects.all()}
+        request, 
+        "shop/add_product.html", 
+        {
+            "categories": Category.objects.all(),
+            "colors": Color.objects.all(),
+            "source_choices": Product.SOURCE_CHOICES,
+        }
     )
-
 
 from django.shortcuts import render, get_object_or_404
 from .models import Product
