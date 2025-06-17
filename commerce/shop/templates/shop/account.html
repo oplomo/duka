@@ -561,7 +561,7 @@
                         {% endif %}
                     </td>
                     <td data-tooltip="Quantity">{{ order.quantity }}</td>
-                    <td data-tooltip="Price">${{ order.product.price }}</td>
+                    <td data-tooltip="Price">kes{{ order.product.price }}</td>
                     <td>
                         {% if order.is_delivered %}
                             <span class="status-delivered">Delivered</span>
@@ -621,7 +621,7 @@
         <h2>Current Cart</h2>
         <div class="cart-summary">
             <p><strong>Items in cart:</strong> {{ cart.total_items }}</p>
-            <p><strong>Subtotal:</strong> ${{ cart.subtotal }}</p>
+            <p><strong>Subtotal:</strong> kes{{ cart.subtotal }}</p>
             {% if active_discounts %}
             <p><strong>Potential discount:</strong> Up to {{ active_discounts.0.percentage }}%</p>
             {% endif %}

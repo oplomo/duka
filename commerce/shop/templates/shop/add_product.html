@@ -273,7 +273,7 @@
             
             <div class="form-row">
                 <div class="form-group">
-                    <label for="price" class="form-label required">Price ($)</label>
+                    <label for="price" class="form-label required">Price (kes)</label>
                     <input type="number" id="price" name="price" class="form-control" 
                            step="0.01" min="0" value="{{ preserved_data.price|default:'' }}" required>
                 </div>
@@ -391,7 +391,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="supplier_price" class="form-label">Supplier Price ($)</label>
+                    <label for="supplier_price" class="form-label">Supplier Price (kes)</label>
                     <input type="number" id="supplier_price" name="supplier_price" class="form-control" 
                            step="0.01" min="0" value="{{ preserved_data.supplier_price|default:'' }}">
                 </div>
@@ -407,7 +407,7 @@
 
         <div class="form-group" id="deliveryFeeGroup"
             style="display: {% if preserved_data.source|default:'local' == 'aliexpress' %}block{% else %}none{% endif %};">
-            <label for="delivery_fee" class="form-label">Delivery Fee ($)</label>
+            <label for="delivery_fee" class="form-label">Delivery Fee (kes)</label>
             <input type="number" id="delivery_fee" name="delivery_fee" class="form-control"
                 step="0.01" min="0" value="{{ preserved_data.delivery_fee|default:'' }}">
         </div>

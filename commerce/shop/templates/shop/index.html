@@ -1039,7 +1039,7 @@
                             <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                         </h3>
                         <p class="search-product-description">{{ product.description|truncatewords:20 }}</p>
-                        <p class="search-product-price">Price: ${{ product.price }}</p>
+                        <p class="search-product-price">Price: kes{{ product.price }}</p>
                         <p class="search-product-category">
                             Category: 
                             {% if product.category %}
@@ -1081,7 +1081,7 @@
                     {% endif %}
                     <div class="product-info">
                         <h3>{{ product.name }}</h3>
-                        <p>${{ product.price }}</p>
+                        <p>kes{{ product.price }}</p>
                         <a href="{{ product.get_absolute_url }}" class="btn">View Product</a>
                     </div>
                 </div>
@@ -1146,7 +1146,7 @@
                 
                 <div class="product-details">
                     <h3 class="product-name">{{ product.name }}</h3>
-                    <p class="product-price">${{ product.price }}</p>
+                    <p class="product-price">kes{{ product.price }}</p>
                     <a href="{{ product.get_absolute_url }}" class="product-button">View Details</a>
                 </div>
             </div>
@@ -1184,7 +1184,7 @@
                 
                 <div class="product-details">
                     <h3 class="product-name">{{ product.name }}</h3>
-                    <p class="product-price">${{ product.price }}</p>
+                    <p class="product-price">kes{{ product.price }}</p>
                     <a href="{{ product.get_absolute_url }}" class="product-button">View Details</a>
                 </div>
             </div>

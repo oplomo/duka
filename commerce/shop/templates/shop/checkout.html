@@ -385,19 +385,19 @@
         <div class="amount-display">
             <div class="amount-row">
                 <span class="amount-label">Subtotal:</span>
-                <span class="amount-value">${{ total_amount|add:discount_amount }}</span>
+                <span class="amount-value">kes{{ total_amount|add:discount_amount }}</span>
             </div>
             
             {% if discount_amount > 0 %}
             <div class="amount-row">
                 <span class="amount-label">Discount:</span>
-                <span class="amount-value discount-amount">-${{ discount_amount }}</span>
+                <span class="amount-value discount-amount">-kes{{ discount_amount }}</span>
             </div>
             {% endif %}
             
             <div class="amount-row total-amount">
                 <span class="amount-label">Total Amount:</span>
-                <span class="amount-value">${{ total_amount }}</span>
+                <span class="amount-value">kes{{ total_amount }}</span>
             </div>
         </div>
         

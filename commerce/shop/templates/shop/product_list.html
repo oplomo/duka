@@ -445,7 +445,7 @@
 
             <div class="product-footer">
                 <div>
-                    <div class="product-price">${{ product.price }}</div>
+                    <div class="product-price">kes{{ product.price }}</div>
                     <div class="product-stock">{{ product.stock }} in stock</div>
                 </div>
                 <button class="add-to-cart" onclick="window.location.href='{% url 'add_to_cart' product.id %}'">Add to Cart</button>

@@ -314,9 +314,9 @@
         
         <h3>Product Information</h3>
         <p><a href="{{ order.product.get_absolute_url }}">{{ order.product.name }}</a> </p>
-        <p>Price: ${{ order.product.price }}</p>
+        <p>Price: kes{{ order.product.price }}</p>
         <p>Quantity: {{ order.quantity }}</p>
-        <p>Total: <span class="total-price">${% widthratio order.quantity 1 order.product.price %}</span></p>
+        <p>Total: <span class="total-price">kes{% widthratio order.quantity 1 order.product.price %}</span></p>
     </div>
     
     <div>

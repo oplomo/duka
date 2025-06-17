@@ -266,7 +266,7 @@
     <div>
         <h3>Basic Information</h3>
         <p>Seller: {{ product.seller.username }}</p>
-        <p>Price: ${{ product.price }}</p>
+        <p>Price: kes{{ product.price }}</p>
         <p>Stock: {{ product.stock }}</p>
         <p>Category: {{ product.category.name|default:"None" }}</p>
         <p>Created: {{ product.created_at|date:"Y-m-d" }}</p>

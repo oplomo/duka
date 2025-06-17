@@ -286,13 +286,13 @@
             </div>
             <div class="item-details">
                 <h3>{{ item.product.name }}</h3>
-                <p class="item-price">${{ item.product.price }}</p>
+                <p class="item-price">kes{{ item.product.price }}</p>
                 <div class="item-quantity">
                     <a href="{% url 'update_cart_item' item.id 'decrease' %}" class="quantity-btn">-</a>
                     <span>{{ item.quantity }}</span>
                     <a href="{% url 'update_cart_item' item.id 'increase' %}" class="quantity-btn">+</a>
                 </div>
-                <p class="item-total">${{ item.item_total }}</p>
+                <p class="item-total">kes{{ item.item_total }}</p>
                 <a href="{% url 'update_cart_item' item.id 'remove' %}" class="remove-btn">Remove</a>
             </div>
         </div>
@@ -303,7 +303,7 @@
         <h3>Order Summary</h3>
         <div class="summary-row">
             <span>Subtotal ({{ cart.total_items }} items)</span>
-            <span>${{ subtotal }}</span> <!-- Display subtotal -->
+            <span>kes{{ subtotal }}</span> <!-- Display subtotal -->
         </div>
         <div class="summary-row">
             <span>Shipping</span>
@@ -311,11 +311,11 @@
         </div>
         <div class="summary-row">
             <span>Discount</span>
-            <span>- ${{ discount_amount }}</span> <!-- Display discount amount -->
+            <span>- kes{{ discount_amount }}</span> <!-- Display discount amount -->
         </div>
         <div class="summary-row total">
             <span>Total</span>
-            <span>${{ total_price }}</span> <!-- Display total price after discount -->
+            <span>kes{{ total_price }}</span> <!-- Display total price after discount -->
         </div>
         <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
     </div>
